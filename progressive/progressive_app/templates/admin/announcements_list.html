@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-megaphone"></i> Announcements</h3>
+  <a href="{% url 'progressive_app:announcement_create' %}" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Add Announcement</a>
+  <table class="table table-striped">
+    <thead><tr><th>Title</th><th>Published</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for a in announcements %}
+      <tr>
+        <td>{{ a.title }}</td>
+        <td>{{ a.published_at }}</td>
+        <td>
+          <a href="{% url 'progressive_app:announcement_edit' a.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'progressive_app:announcement_delete' a.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="3">No announcements found.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

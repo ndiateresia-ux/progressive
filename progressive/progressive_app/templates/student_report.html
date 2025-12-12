@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Report for {{ student.first_name }} {{ student.last_name }}{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-bar-chart"></i> Report for {{ student.first_name }} {{ student.last_name }}</h3>
+
+  <!-- Summary -->
+  <div class="card mb-3">
+    <div class="card-body">
+      <p><strong>Total Marks:</strong> {{ total_marks }}</p>
+      <p><strong>Average Marks:</strong> {{ average_marks }}</p>
+      <p><strong>Subjects Taken:</strong> {{ subjects_count }}</p>
+    </div>
+  </div>
+
+  <!-- Detailed Marks Table -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Marks</th>
+        <th>Date Recorded</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mark in marks %}
+      <tr>
+        <td>{{ mark.subject.name }}</td>
+        <td>{{ mark.teacher.first_name }} {{ mark.teacher.last_name }}</td>
+        <td>{{ mark.marks }}</td>
+        <td>{{ mark.date_recorded|date:"M d, Y H:i" }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No marks recorded yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'progressive_app:student_report_pdf' student.id %}" class="btn btn-primary">
+      <i class="bi bi-file-earmark-pdf"></i> Download Report (PDF)
+  </a>
+
+
+  <a href="{% url 'students_list' %}" class="btn btn-secondary">
+    <i class="bi bi-arrow-left"></i> Back to Students
+  </a>
+</div>
+{% endblock %}

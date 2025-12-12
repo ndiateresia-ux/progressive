@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Delete Course{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-exclamation-triangle"></i> Confirm Delete</h3>
+  <p>Are you sure you want to delete the course <strong>{{ course.name }}</strong>?</p>
+
+  <form method="post">{% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+      <i class="bi bi-trash"></i> Yes, Delete
+    </button>
+    <a href="{% url 'courses_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

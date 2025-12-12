@@ -1,0 +1,129 @@
+:root {
+  --prog-blue: #0d6efd;
+}
+.card {
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.card-header {
+  background: var(--prog-blue);
+  color: #fff;
+}
+.btn-primary {
+  background: var(--prog-blue);
+  border-color: var(--prog-blue);
+}
+a { text-decoration: none; }
+body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .navbar {
+        background-color: #0d6efd !important;
+      }
+      .navbar-brand {
+        font-weight: bold;
+        color: #fff !important;
+      }
+      .navbar .nav-link {
+        color: #fff !important;
+      }
+      .navbar .nav-link:hover {
+        color: #cce0ff !important;
+      }
+      .sidebar {
+        min-height: 100vh;
+        border-right: 1px solid #dee2e6;
+        background-color: #0d6efd; /* Blue sidebar */
+      }
+      .sidebar h5, .sidebar h6 {
+        color: #fff;
+      }
+      .list-group-item {
+        background-color: #0d6efd;
+        color: #fff;
+        border: none;
+      }
+      .list-group-item-action:hover {
+        background-color: #0b5ed7; /* darker blue on hover */
+        color: #fff;
+      }
+      .list-group-item i {
+        margin-right: 6px;
+      }
+      .alert {
+        border-radius: 0.5rem;
+      }
+      .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+      }
+      .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0b5ed7;
+      }
+      .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+      }
+      .btn-secondary:hover {
+        background-color: #5c636a;
+        border-color: #5c636a;
+      }
+         .sidebar {
+        font-size: 0.9rem; /* smaller font size */
+      }
+      .sidebar .list-group-item {
+        background-color: #0d6efd; /* Bootstrap primary blue */
+        color: #fff;
+        border: none;
+      }
+      .sidebar .list-group-item:hover {
+        background-color: #0b5ed7; /* darker hover */
+      }
+      .sidebar h6 {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        color: #cfe2ff;
+      }
+      /* Light blue background for login page */
+.login-page {
+  background-color: #e6f2ff; /* very light shade of blue */
+}
+
+/* Centered login box with balanced width */
+.login-box {
+  max-width: 700px; /* wider so form & image don’t look squeezed */
+    height: 150%;
+}
+
+/* Ensure image fits nicely */
+.login-box img {
+  object-fit: cover;
+  height: 150%;
+}
+/* Stats cards styling */
+.stat-card {
+  background: linear-gradient(135deg, #1252cf, #9397e3); /* blue gradient */
+  color: #fff; /* white text for contrast */
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card .card-title {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.stat-card .display-6 {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}My Reports{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="mb-4"><i class="bi bi-bar-chart"></i> My Reports</h2>
+  <form method="get" class="mb-3">
+    <select class="form-select" name="semester_id">
+      <option value="">All Semesters</option>
+      {% for sem in semesters %}
+      <option value="{{ sem.id }}" {% if selected_semester and sem.id == selected_semester.id %}selected{% endif %}>{{ sem.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary mt-2">Filter</button>
+  </form>
+  <table class="table table-striped">
+    <thead>
+      <tr><th>Subject</th><th>Class</th><th>Semester</th><th>Score</th></tr>
+    </thead>
+    <tbody>
+      {% for m in marks %}
+      <tr>
+        <td>{{ m.subject.name }}</td>
+        <td>{{ m.school_class.name }}</td>
+        <td>{{ m.semester.name }}</td>
+        <td>{{ m.score }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" class="text-muted">No marks found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

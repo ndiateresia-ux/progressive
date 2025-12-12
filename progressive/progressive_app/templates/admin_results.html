@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Consolidated Results{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-bar-chart"></i> Consolidated Results</h3>
+<form method="get" class="row mb-3">
+  <div class="col-md-3">
+    <select name="subject" class="form-select">
+      <option value="">All Subjects</option>
+      {% for s in subjects %}
+      <option value="{{ s.id }}" {% if request.GET.subject == s.id|stringformat:"s" %}selected{% endif %}>{{ s.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="class" class="form-select">
+      <option value="">All Classes</option>
+      {% for c in classes %}
+      <option value="{{ c.id }}" {% if request.GET.class == c.id|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="semester" class="form-select">
+      <option value="">All Semesters</option>
+      {% for sem in semesters %}
+      <option value="{{ sem.id }}" {% if request.GET.semester == sem.id|stringformat:"s" %}selected{% endif %}>{{ sem.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-primary w-100">
+      <i class="bi bi-funnel"></i> Filter
+    </button>
+  </div>
+</form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mark in marks %}
+      <tr>
+        <td>{{ mark.student.first_name }} {{ mark.student.last_name }}</td>
+        <td>{{ mark.subject.name }}</td>
+        <td>{{ mark.teacher.first_name }} {{ mark.teacher.last_name }}</td>
+        <td>{{ mark.marks }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No results recorded yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'admin_results_pdf' %}" class="btn btn-primary">
+    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+  </a>
+</div>
+{% endblock %}

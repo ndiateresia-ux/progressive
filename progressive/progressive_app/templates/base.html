@@ -1,0 +1,152 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Progressive System{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+  </head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg shadow-sm bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'progressive_app:dashboard' %}">
+          <i class="bi bi-speedometer2"></i> Progressive System
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Right-side nav -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <span class="nav-link">
+                  <i class="bi bi-person-circle"></i> {{ user.first_name }} {{ user.last_name }}
+                </span>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning" href="{% url 'progressive_app:logout' %}">
+                  <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'progressive_app:login' %}">
+                  <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <!-- Flash messages -->
+    <div class="container mt-3">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <!-- Layout with Sidebar + Main Content -->
+   <div class="container-fluid flex-grow-1">
+      <div class="row min-vh-100">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 sidebar bg-primary text-white p-3 d-flex flex-column">
+
+          <!-- User Profile Box -->
+          <div class="profile-box mb-4">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-person-circle fs-4 me-2"></i>
+              <span class="fw-bold">{{ user.first_name }} {{ user.last_name }}</span>
+            </div>
+            <ul class="list-unstyled small ms-1">
+              {% if user.role == 'student' %}
+                <li><i class="bi bi-card-list me-1"></i> Admission: {{ user.admission_number }}</li>
+                <li><i class="bi bi-collection me-1"></i> Class: {{ user.school_class.name }}</li>
+                <li><i class="bi bi-building me-1"></i> Department: {{ user.department.name }}</li>
+                <li><i class="bi bi-journal-bookmark me-1"></i> Course: {{ user.course.name }}</li>
+              {% elif user.role == 'teacher' %}
+                <li><i class="bi bi-building me-1"></i> Department: {{ user.department.name }}</li>
+                <li><i class="bi bi-envelope me-1"></i> Email: {{ user.email }}</li>
+              {% elif user.role == 'admin' %}
+                <li><i class="bi bi-shield-lock me-1"></i> Role: Admin</li>
+                <li><i class="bi bi-envelope me-1"></i> Email: {{ user.email }}</li>
+              {% endif %}
+            </ul>
+          </div>
+          <!-- Navigation -->
+          <h5 class="mb-3"><i class="bi bi-list"></i> Navigation</h5>
+          <div class="list-group list-group-flush flex-grow-1">
+            <a href="{% url 'progressive_app:dashboard' %}" class="list-group-item list-group-item-action bg-primary text-white">
+              <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <!-- Admin Section -->
+            {% if user.role == 'admin' %}
+              <h6 class="mt-3 mb-2">User Management</h6>
+              <a href="{% url 'progressive_app:students_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-people"></i> Students</a>
+              <a href="{% url 'progressive_app:teachers_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-person-badge"></i> Teachers</a>
+              <a href="{% url 'progressive_app:admins_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-shield-lock"></i> Admins</a>
+              <h6 class="mt-3 mb-2">Academics</h6>
+              <a href="{% url 'progressive_app:departments_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-building"></i> Departments</a>
+              <a href="{% url 'progressive_app:courses_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-book"></i> Courses</a>
+              <a href="{% url 'progressive_app:classes_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-collection"></i> Classes</a>
+              <a href="{% url 'progressive_app:subjects_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-journal-bookmark"></i> Subjects</a>
+              <a href="{% url 'progressive_app:semesters_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-calendar-event"></i> Semesters</a>
+              <a href="{% url 'progressive_app:admin_results_pdf' %}" class="list-group-item bg-primary text-white"><i class="bi bi-file-earmark-pdf"></i> Export Results</a>
+              <a href="{% url 'progressive_app:reports' %}" class="list-group-item bg-primary text-white"><i class="bi bi-bar-chart"></i> Reports</a>
+              <a href="{% url 'progressive_app:events_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-calendar-check"></i> Events</a>
+            {% endif %}
+
+            <!-- Teacher Section -->
+            {% if user.role == 'teacher' %}
+              <h6 class="mt-3 mb-2">Teacher Tools</h6>
+              <a href="{% url 'progressive_app:upload_marks' %}" class="list-group-item bg-primary text-white"><i class="bi bi-pencil-square"></i> Upload Marks</a>
+              <a href="{% url 'progressive_app:register_subjects' %}" class="list-group-item bg-primary text-white"><i class="bi bi-journal-bookmark"></i> Register Subjects</a>
+              <a href="{% url 'progressive_app:teacher_subjects_manage' %}" class="list-group-item bg-primary text-white"><i class="bi bi-clipboard-check"></i> Assignments</a>
+            {% endif %}
+
+            <!-- Student Section -->
+            {% if user.role == 'student' %}
+              <h6 class="mt-3 mb-2">Student Tools</h6>
+              <a href="{% url 'progressive_app:student_report' user.id %}" class="list-group-item bg-primary text-white"><i class="bi bi-journal-check"></i> My Results</a>
+              <a href="{% url 'progressive_app:student_results_download' user.id %}" class="list-group-item bg-primary text-white"><i class="bi bi-file-earmark-pdf"></i> Download Results (PDF)</a>
+            {% endif %}
+
+            <!-- Information -->
+            <h6 class="mt-3 mb-2">Information</h6>
+            <a href="{% url 'progressive_app:announcements_list' %}" class="list-group-item bg-primary text-white"><i class="bi bi-megaphone"></i> Announcements</a>
+          </div>
+        </div>
+        <!-- Main Content -->
+        <main class="col-md-9 col-lg-10 p-4">
+          {% block content %}{% endblock %}
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3 border-top mt-auto">
+      <small>&copy; {% now "Y" %} Progressive App. All rights reserved.</small>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+

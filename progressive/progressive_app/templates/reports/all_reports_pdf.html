@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Reports</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      margin: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 6px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .group-header {
+      background-color: #e0e0e0;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Progressive System — All Reports</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Admission No.</th>
+        <th>Student Name</th>
+        <th>Class</th>
+        <th>Department</th>
+        <th>Course</th>
+        <th>Subject</th>
+        <th>Semester</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in marks %}
+        <tr>
+          <td>{{ m.student.admission_number }}</td>
+          <td>{{ m.student.first_name }} {{ m.student.last_name }}</td>
+          <td>{{ m.school_class.name }}</td>
+          <td>{{ m.department.name }}</td>
+          <td>{{ m.course.name }}</td>
+          <td>{{ m.subject.name }}</td>
+          <td>{{ m.semester.name }}</td>
+          <td>{{ m.score }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="8" class="text-muted">No reports available.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p><small>Generated on {% now "jS F Y, H:i" %}</small></p>
+</body>
+</html>

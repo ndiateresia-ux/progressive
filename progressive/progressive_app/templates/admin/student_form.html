@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}{{ form_title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-4"><i class="bi bi-person-plus"></i> {{ form_title }}</h3>
+        <form method="post">
+          {% csrf_token %}
+
+          <!-- Admission Number (auto-generated, readonly) -->
+          <div class="mb-3">
+            <label class="form-label">Admission Number</label>
+            <input type="text" class="form-control" name="admission_number"
+                   value="{{ student.admission_number }}" readonly>
+          </div>
+
+          <!-- Email (auto-generated, readonly) -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email"
+                   value="{{ student.email }}" readonly>
+          </div>
+
+          <!-- Editable fields -->
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" name="first_name"
+                   value="{{ student.first_name }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="last_name"
+                   value="{{ student.last_name }}">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Department</label>
+            <select name="department" class="form-select">
+              {% for d in departments %}
+              <option value="{{ d.id }}" {% if student.department and student.department.id == d.id %}selected{% endif %}>{{ d.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Course</label>
+            <select name="course" class="form-select">
+              {% for c in courses %}
+              <option value="{{ c.id }}" {% if student.course and student.course.id == c.id %}selected{% endif %}>{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Class</label>
+            <select name="school_class" class="form-select">
+              {% for cl in classes %}
+              <option value="{{ cl.id }}" {% if student.school_class and student.school_class.id == cl.id %}selected{% endif %}>{{ cl.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Semester</label>
+            <select name="semester" class="form-select">
+              {% for s in semesters %}
+              <option value="{{ s.id }}" {% if student.semester and student.semester.id == s.id %}selected{% endif %}>{{ s.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Save</button>
+            <a href="{% url 'progressive_app:students_list' %}" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

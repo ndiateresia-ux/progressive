@@ -1,0 +1,20 @@
+<!-- templates/students/subjects.html -->
+{% extends 'base.html' %}
+{% block title %}My Subjects{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">My Subjects</div>
+  <div class="card-body">
+    <table class="table table-sm">
+      <thead><tr><th>Code</th><th>Name</th></tr></thead>
+      <tbody>
+        {% for s in subjects %}
+          <tr><td>{{ s.code }}</td><td>{{ s.name }}</td></tr>
+        {% empty %}
+          <tr><td colspan="2" class="text-muted">No subjects found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

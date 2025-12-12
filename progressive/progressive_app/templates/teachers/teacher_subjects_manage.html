@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}My Subjects{% endblock %}
+{% block content %}
+<div class="container">
+  <h3 class="mb-4"><i class="bi bi-clipboard-check"></i> My Registered Subjects</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Class</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ts in subjects %}
+      <tr>
+        <td>{{ ts.subject.name }}</td>
+        <td>{{ ts.school_class.name }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="2" class="text-muted">No subjects registered yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

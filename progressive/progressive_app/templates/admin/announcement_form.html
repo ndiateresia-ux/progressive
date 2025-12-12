@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{ form_title }}{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-megaphone"></i> {{ form_title }}</h3>
+  <form method="post">{% csrf_token %}
+    <div class="mb-3">
+      <label for="id_title" class="form-label">Title</label>
+      <input type="text" name="title" id="id_title" value="{{ announcement.title }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="id_content" class="form-label">Content</label>
+      <textarea name="content" id="id_content" class="form-control">{{ announcement.content }}</textarea>
+    </div>
+
+    <!-- Visibility Dropdown -->
+    <div class="mb-3">
+      <label for="id_visibility" class="form-label">Visible To</label>
+      <select name="visibility" id="id_visibility" class="form-select">
+        <option value="all" {% if announcement.visibility == "all" %}selected{% endif %}>All Users</option>
+        <option value="teacher" {% if announcement.visibility == "teacher" %}selected{% endif %}>Teachers Only</option>
+        <option value="student" {% if announcement.visibility == "student" %}selected{% endif %}>Students Only</option>
+      </select>
+    </div>
+
+    <button class="btn btn-success">Save</button>
+    <a href="{% url 'progressive_app:announcements_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

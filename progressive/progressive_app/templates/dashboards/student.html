@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-9 col-lg-10">
+    <h2 class="mb-4"><i class="bi bi-speedometer2"></i> Student Dashboard</h2>
+
+    <!-- Announcements FIRST -->
+  <!-- dashboard.html -->
+   <h4 class="mt-4"><i class="bi bi-megaphone"></i> Latest Announcements</h4>
+    <ul class="list-group mb-3">
+      {% for announcement in announcements %}
+        <li class="list-group-item">
+          <strong>{{ announcement.title }}</strong><br>
+          {{ announcement.content }}
+        </li>
+      {% empty %}
+        <li class="list-group-item">No announcements available.</li>
+      {% endfor %}
+    </ul>
+
+    <h4>Events</h4>
+    <ul class="list-group mb-3">
+      {% for event in events %}
+        <li class="list-group-item">
+          <strong>{{ event.name }}</strong> - {{ event.date }}<br>
+          {{ event.description }}
+        </li>
+      {% empty %}
+        <li class="list-group-item">No events available.</li>
+      {% endfor %}
+    </ul>
+
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<div class="profile-box text-white">
+  <div class="d-flex align-items-center mb-2">
+    <i class="bi bi-person-circle fs-4 me-2"></i>
+    <span class="fw-bold">{{ user.first_name }} {{ user.last_name }}</span>
+  </div>
+
+  {% if user.role == "student" %}
+    <ul class="list-unstyled small ms-1">
+      <li><i class="bi bi-card-list me-1"></i> Admission: {{ user.admission_number }}</li>
+      <li><i class="bi bi-collection me-1"></i> Class: {{ user.school_class.name }}</li>
+      <li><i class="bi bi-building me-1"></i> Department: {{ user.department.name }}</li>
+      <li><i class="bi bi-journal-bookmark me-1"></i> Course: {{ user.course.name }}</li>
+    </ul>
+  {% elif user.role == "teacher" %}
+    <ul class="list-unstyled small ms-1">
+      <li><i class="bi bi-building me-1"></i> Department: {{ user.department.name }}</li>
+      <li><i class="bi bi-envelope me-1"></i> Email: {{ user.email }}</li>
+    </ul>
+  {% endif %}
+</div>

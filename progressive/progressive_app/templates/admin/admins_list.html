@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Admins{% endblock %}
+{% block content %}
+<div class="container">
+  <h2 class="mb-4"><i class="bi bi-shield-lock"></i> Admins</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in page_obj %}
+      <tr>
+        <td>{{ a.first_name }} {{ a.last_name }}</td>
+        <td>{{ a.email }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="2" class="text-muted">No admins found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

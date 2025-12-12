@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}{{ form_title }}{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-person-plus-fill"></i> {{ form_title }}</h3>
+  <form method="post">{% csrf_token %}
+    <div class="mb-3">
+      <label>First Name</label>
+      <input type="text" name="first_name" value="{{ teacher.first_name }}" class="form-control" id="firstName">
+    </div>
+    <div class="mb-3">
+      <label>Last Name</label>
+      <input type="text" name="last_name" value="{{ teacher.last_name }}" class="form-control" id="lastName">
+    </div>
+    <div class="mb-3">
+      <label>Department</label>
+      <select name="department" class="form-select">
+        {% for d in departments %}
+        <option value="{{ d.id }}" {% if teacher.department and teacher.department.id == d.id %}selected{% endif %}>{{ d.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Generated Email Preview (like student admission/email preview) -->
+    <div class="mb-3">
+      <label>Email (auto-generated)</label>
+      <input type="email" name="email" value="{{ teacher.email }}" class="form-control" id="emailPreview" readonly>
+      <small class="text-muted">Generated automatically from first and last name.</small>
+    </div>
+
+    <button class="btn btn-success">Save</button>
+    <a href="{% url 'progressive_app:teachers_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+
+<!-- Live email preview script -->
+<script>
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const emailPreview = document.getElementById("emailPreview");
+
+  function updateEmailPreview() {
+    const first = firstNameInput.value.trim().toLowerCase();
+    const last = lastNameInput.value.trim().toLowerCase();
+    if (first && last) {
+      emailPreview.value = `${first}${last}@progressive.sch`;
+    } else {
+      emailPreview.value = "";
+    }
+  }
+
+  firstNameInput.addEventListener("input", updateEmailPreview);
+  lastNameInput.addEventListener("input", updateEmailPreview);
+
+  // Initialize preview if editing existing teacher
+  updateEmailPreview();
+</script>
+{% endblock %}

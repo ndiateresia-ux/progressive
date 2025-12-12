@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Teachers{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-person-badge"></i> Teachers</h3>
+  <a href="{% url 'progressive_app:teacher_create' %}" class="btn btn-primary mb-3"><i class="bi bi-person-plus-fill"></i> Add Teacher</a>
+  <table class="table table-striped">
+    <thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for teacher in page_obj %}
+      <tr>
+        <td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+        <td>{{ teacher.email }}</td>
+        <td>{{ teacher.department.name }}</td>
+        <td>
+          <a href="{% url 'progressive_app:teacher_update' teacher.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'progressive_app:teacher_delete' teacher.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="4">No teachers found.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

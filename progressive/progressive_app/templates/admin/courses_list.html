@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Courses List{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-journal-bookmark"></i> Courses</h3>
+
+  <a href="{% url 'progressive_app:course_create' %}" class="btn btn-success mb-3">
+    <i class="bi bi-plus-circle"></i> Add New Course
+  </a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Course Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for course in courses %}
+      <tr>
+        <td>{{ course.name }}</td>
+        <td>
+          <a href="{% url 'progressive_app:course_edit' course.id %}" class="btn btn-primary btn-sm">
+            <i class="bi bi-pencil-square"></i> Edit
+          </a>
+          <a href="{% url 'progressive_app:course_delete' course.id %}" class="btn btn-danger btn-sm">
+            <i class="bi bi-trash"></i> Delete
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">No courses found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

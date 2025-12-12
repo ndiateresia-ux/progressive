@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}{{ student.first_name }} {{ student.last_name }} - Report{% endblock %}
+{% block content %}
+<div class="container">
+
+  <!-- Centered Student Details Header -->
+  <div class="text-center mb-4">
+    <h3><i class="bi bi-card-checklist"></i> Report Card</h3>
+    <p><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+    <p><strong>Admission No:</strong> {{ student.username }}</p>
+    <p><strong>Email:</strong> {{ student.email }}</p>
+    {% if student.school_class %}
+      <p><strong>Class:</strong> {{ student.school_class.name }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Summary Section -->
+  <div class="row mb-4 text-center">
+    <div class="col-md-4">
+      <div class="card border">
+        <div class="card-body">
+          <h5 class="card-title">Total Marks</h5>
+          <p class="card-text fw-bold">{{ total_marks }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border">
+        <div class="card-body">
+          <h5 class="card-title">Average Marks</h5>
+          <p class="card-text fw-bold">{{ average_marks }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border">
+        <div class="card-body">
+          <h5 class="card-title">Subjects Count</h5>
+          <p class="card-text fw-bold">{{ subjects_count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Marks Table with Borders -->
+ <table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Subject</th>
+      <th>Semester</th>
+      <th>Teacher</th>
+      <th>Score</th>
+      <th>Grade</th>
+      <th>GPA</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mark in marks %}
+    <tr>
+      <td>{{ mark.subject.name }}</td>
+      <td>{{ mark.semester.name }}</td>
+      <td>{{ mark.teacher.first_name }} {{ mark.teacher.last_name }}</td>
+      <td>{{ mark.score }}</td>
+      <td>{{ mark.grade }}</td>
+      <td>{{ mark.gpa }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center">No marks recorded yet.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  <!-- Principal Signature & Stamp Placeholder -->
+  <div class="mt-5">
+    <p><strong>Principal’s Signature & Stamp:</strong></p>
+    <div style="border: 1px solid #000; height: 100px; width: 300px;"></div>
+  </div>
+
+</div>
+{% endblock %}

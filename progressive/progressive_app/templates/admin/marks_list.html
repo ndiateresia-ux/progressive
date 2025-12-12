@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Manage Marks{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h3>Marks</h3>
+  <a href="{% url 'progressive_app:mark_create' %}" class="btn btn-primary"><i class="bi bi-plus"></i> Add Mark</a>
+</div>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead class="table-primary">
+        <tr><th>Student</th><th>Subject</th><th>Class</th><th>Term</th><th>Score</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for m in marks %}
+        <tr>
+          <td>{{ m.student.admission_number }}</td>
+          <td>{{ m.subject.code }} - {{ m.subject.name }}</td>
+          <td>{{ m.school_class.name }}</td>
+          <td>{{ m.term }}</td>
+          <td>{{ m.score }}</td>
+          <td>
+            <a href="{% url 'progressive_app:mark_update' m.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{% url 'progressive_app:mark_delete' m.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center text-muted">No marks found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

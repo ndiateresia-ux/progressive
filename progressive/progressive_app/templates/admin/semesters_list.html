@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Semesters{% endblock %}
+{% block content %}
+<div class="container">
+  <h3><i class="bi bi-calendar-event"></i> Semesters</h3>
+  <a href="{% url 'progressive_app:semester_create' %}" class="btn btn-primary mb-3"><i class="bi bi-plus-square"></i> Add Semester</a>
+  <table class="table table-striped">
+    <thead><tr><th>Name</th><th>Start</th><th>End</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for s in semesters %}
+      <tr>
+        <td>{{ s.name }}</td>
+        <td>{{ s.start_date }}</td>
+        <td>{{ s.end_date }}</td>
+        <td>
+          <a href="{% url 'progressive_app:semester_edit' s.id %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'progressive_app:semester_delete' s.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="4">No semesters found.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

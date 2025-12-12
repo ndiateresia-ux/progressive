@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Reports (Admin){% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-9 col-lg-10">
+    <h2 class="mb-4"><i class="bi bi-bar-chart"></i> Reports (Admin)</h2>
+
+    <!-- Filter Form -->
+    <form method="get" action="{% url 'progressive_app:admin_results_pdf' %}" class="row g-3 mb-3">
+      <div class="col-md-3">
+        <label class="form-label">Semester</label>
+        <select class="form-select" name="semester_id">
+          <option value="">All</option>
+          {% for sem in semesters %}
+            <option value="{{ sem.id }}">{{ sem.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Subject</label>
+        <select class="form-select" name="subject_id">
+          <option value="">All</option>
+          {% for subj in subjects %}
+            <option value="{{ subj.id }}">{{ subj.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Class</label>
+        <select class="form-select" name="class_id">
+          <option value="">All</option>
+          {% for c in classes %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Student</label>
+        <select class="form-select" name="student_id">
+          <option value="">All</option>
+          {% for s in students %}
+            <option value="{{ s.id }}">{{ s.first_name }} {{ s.last_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-12 d-flex justify-content-between">
+        <!-- Filtered Export -->
+        <button type="submit" class="btn btn-danger">
+          <i class="bi bi-file-earmark-pdf"></i> Export Filtered PDF
+        </button>
+
+        <!-- Export All Reports -->
+        <a href="{% url 'progressive_app:all_reports_pdf' %}" class="btn btn-dark">
+          <i class="bi bi-archive"></i> Download All Reports
+        </a>
+      </div>
+    </form>
+
+    <!-- Inline table preview -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Student</th><th>Subject</th><th>Class</th><th>Semester</th><th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in marks %}
+        <tr>
+          <td>{{ m.student.admission_number }}</td>
+          <td>{{ m.subject.name }}</td>
+          <td>{{ m.school_class.name }}</td>
+          <td>{{ m.semester.name }}</td>
+          <td>{{ m.score }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-muted">No marks found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
